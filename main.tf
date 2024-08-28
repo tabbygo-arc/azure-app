@@ -32,14 +32,13 @@ provider "azurerm" {
 
 data "azurerm_resource_group" "tfexample" {
   name                = "myTFResourceGroup"
-  location            = "westus2"
 }
 
 # Create a Virtual Network
 resource "azurerm_virtual_network" "tfexample" {
   name                = "my-terraform-vnet"
-  location            = azurerm_resource_group.tfexample.location
-  resource_group_name = azurerm_resource_group.tfexample.name
+  location            = dayta.azurerm_resource_group.tfexample.location
+  resource_group_name = data.azurerm_resource_group.tfexample.name
   address_space       = ["10.0.0.0/16"]
 
   tags = {
@@ -50,7 +49,7 @@ resource "azurerm_virtual_network" "tfexample" {
 # Create a Subnet in the Virtual Network
 resource "azurerm_subnet" "tfexample" {
   name                 = "my-terraform-subnet"
-  resource_group_name  = azurerm_resource_group.tfexample.name
+  resource_group_name  = data.azurerm_resource_group.tfexample.name
   virtual_network_name = azurerm_virtual_network.tfexample.name
   address_prefixes     = ["10.0.2.0/24"]
 }
@@ -58,8 +57,8 @@ resource "azurerm_subnet" "tfexample" {
 # Create a Public IP
 resource "azurerm_public_ip" "tfexample" {
   name                = "my-terraform-public-ip"
-  location            = azurerm_resource_group.tfexample.location
-  resource_group_name = azurerm_resource_group.tfexample.name
+  location            = data.azurerm_resource_group.tfexample.location
+  resource_group_name = data.azurerm_resource_group.tfexample.name
   allocation_method   = "Static"
 
   tags = {
@@ -70,8 +69,8 @@ resource "azurerm_public_ip" "tfexample" {
 # Create a Network Security Group and rule
 resource "azurerm_network_security_group" "tfexample" {
   name                = "my-terraform-nsg"
-  location            = azurerm_resource_group.tfexample.location
-  resource_group_name = azurerm_resource_group.tfexample.name
+  location            = data.azurerm_resource_group.tfexample.location
+  resource_group_name = data.azurerm_resource_group.tfexample.name
 
   security_rule {
     name                       = "HTTP"
@@ -93,8 +92,8 @@ resource "azurerm_network_security_group" "tfexample" {
 # Create a Network Interface
 resource "azurerm_network_interface" "tfexample" {
   name                = "my-terraform-nic"
-  location            = azurerm_resource_group.tfexample.location
-  resource_group_name = azurerm_resource_group.tfexample.name
+  location            = data.azurerm_resource_group.tfexample.location
+  resource_group_name = data.azurerm_resource_group.tfexample.name
 
   ip_configuration {
     name                          = "my-terraform-nic-ip"
@@ -117,8 +116,8 @@ resource "azurerm_network_interface_security_group_association" "tfexample" {
 # Create a Virtual Machine
 resource "azurerm_linux_virtual_machine" "tfexample" {
   name                            = "my-terraform-vm"
-  location                        = azurerm_resource_group.tfexample.location
-  resource_group_name             = azurerm_resource_group.tfexample.name
+  location                        = data.azurerm_resource_group.tfexample.location
+  resource_group_name             = data.azurerm_resource_group.tfexample.name
   network_interface_ids           = [azurerm_network_interface.tfexample.id]
   size                            = "Standard_DS1_v2"
   computer_name                   = "myvm"
