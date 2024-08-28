@@ -32,6 +32,7 @@ provider "azurerm" {
 
 data "azurerm_resource_group" "tfexample" {
   name                = "myTFResourceGroup"
+  location            = "westus2"
 }
 
 # Create a Virtual Network
