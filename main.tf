@@ -34,8 +34,8 @@ resource "azurerm_resource_group" "tfexample" {
 # Create a Virtual Network
 resource "azurerm_virtual_network" "tfexample" {
   name                = "my-terraform-vnet"
-  location            = data.azurerm_resource_group.tfexample.location
-  resource_group_name = data.azurerm_resource_group.tfexample.name
+  location            = azurerm_resource_group.tfexample.location
+  resource_group_name = azurerm_resource_group.tfexample.name
   address_space       = ["10.0.0.0/16"]
 
   tags = {
@@ -54,8 +54,8 @@ resource "azurerm_subnet" "tfexample" {
 # Create a Public IP
 resource "azurerm_public_ip" "tfexample" {
   name                = "my-terraform-public-ip"
-  location            = data.azurerm_resource_group.tfexample.location
-  resource_group_name = data.azurerm_resource_group.tfexample.name
+  location            = azurerm_resource_group.tfexample.location
+  resource_group_name = azurerm_resource_group.tfexample.name
   allocation_method   = "Static"
 
   tags = {
@@ -66,8 +66,8 @@ resource "azurerm_public_ip" "tfexample" {
 # Create a Network Security Group and rule
 resource "azurerm_network_security_group" "tfexample" {
   name                = "my-terraform-nsg"
-  location            = data.azurerm_resource_group.tfexample.location
-  resource_group_name = data.azurerm_resource_group.tfexample.name
+  location            = azurerm_resource_group.tfexample.location
+  resource_group_name = azurerm_resource_group.tfexample.name
 
   security_rule {
     name                       = "HTTP"
