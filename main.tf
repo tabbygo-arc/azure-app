@@ -25,14 +25,11 @@ provider "azurerm" {
 }
 
 # Create a Resource Group if it doesn’t exist
-#resource "azurerm_resource_group" "tfexample" {
-  #name     = "my-terraform-rg"
-  #location = "West Europe"
-#}
-
-data "azurerm_resource_group" "tfexample" {
-  name                = "myTFResourceGroup"
+resource "azurerm_resource_group" "tfexample" {
+  name     = "my-terraform-rg"
+  location = "West Europe"
 }
+
 
 # Create a Virtual Network
 resource "azurerm_virtual_network" "tfexample" {
